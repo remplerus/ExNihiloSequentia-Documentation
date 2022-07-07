@@ -111,6 +111,15 @@ const config = {
               },
             ],
           },
+          {
+            title: 'Legal',
+            items: [
+              {
+                label: 'Privacy',
+                to: '/privacy',
+              },
+            ],
+          }
         ],
         copyright: `Copyright © ${new Date().getFullYear()} NovaMachina Mods. Built with Docusaurus.`,
       },
@@ -119,6 +128,12 @@ const config = {
         darkTheme: darkCodeTheme,
       },
     }),
+  scripts: [
+    {
+      src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4549739881111156",
+      async: true
+    }
+  ]
 };
 
 module.exports = config;
