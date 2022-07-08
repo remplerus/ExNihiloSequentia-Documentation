@@ -25,10 +25,13 @@ podTemplate(yaml: '''
     stage('Build NGNIX Image') {
       script {
         env.TAG = sh script: "date +%Y.%m.%d-%H.%M.%S"
+        echo "TAG: ${TAG}"
       }
       container('kaniko') {
         stage('Build React Project') {
-          sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force"
+          withEnv(["TAG=${TAG}"]){
+            sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:$TAG --force"
+          }
         }
       }
     }
