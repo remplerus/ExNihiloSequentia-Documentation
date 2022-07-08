@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             cloud 'Kubernetes'
             namespace 'default'
-            defaultContainer 'POD_LABEL'
+            defaultContainer 'kaniko'
             yaml '''
 apiVersion: v1
 kind: Pod
