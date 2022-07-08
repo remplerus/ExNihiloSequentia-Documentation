@@ -24,6 +24,9 @@ spec:
           path: config.json
 ''') {
   node(POD_LABEL) {
+    properties([
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    ])
     stage('Clone') {
         git credentialsId: '116d5159-9fe5-44ce-b7c4-d353c4837524', url: 'https://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation'
     }
@@ -48,7 +51,7 @@ spec:
         sh script: "cat deployment.yaml"
         
         kubeconfig(caCertificate: env.K8S_CA, credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
-            sh script: "kubectl cluster-info"
+            sh script: "kubectl apply -f deployment.yaml"
         }
     }
   }
