@@ -28,6 +28,9 @@ volumes:
             '''
         }
     }
+    environment {
+        K8S_CA = credentials('k8s-ca')
+    }
     stages{
         stage('Build NGNIX Image') {
             steps {
@@ -46,7 +49,7 @@ volumes:
         stage('Deploy to Kubernetes') {
             steps{
                 sh script: "sed -i 's/TAG/${TAG}/g' deployment.yaml"
-                kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
+                kubeconfig(caCertificate: '${K8S_CA}', credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
                     sh script: "kubectl apply -f deployment.yaml"
                 }
             }
