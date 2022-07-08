@@ -24,7 +24,7 @@ spec:
         items:
         - key: .dockerconfigjson
           path: config.json
-  - name: Kaniko-cache
+  - name: kaniko-cache
     persistentVolumeClaim:
       claimName: kaniko-cache
 ''') {
