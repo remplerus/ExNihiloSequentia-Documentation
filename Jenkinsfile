@@ -25,7 +25,7 @@ podTemplate(yaml: '''
     stage('Build NGNIX Image') {
       script {
         env.TAG = sh script: "date +%Y.%m.%d-%H.%M.%S"
-        echo "TAG: ${TAG}"
+        sh script: "printenv"
       }
       container('kaniko') {
         stage('Build React Project') {
