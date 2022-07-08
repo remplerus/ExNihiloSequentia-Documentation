@@ -47,9 +47,10 @@ spec:
   tls:
   - hosts:
     - "*.jacob-williams.me"
+    - "jacob-williams.me"
     secretName: wildcard-tls
   rules:
-  - host: jacob-williams.me
+  - host: 'jacob-williams.me'
     http:
       paths:
       - pathType: Prefix
