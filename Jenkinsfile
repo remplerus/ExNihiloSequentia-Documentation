@@ -42,7 +42,7 @@ spec:
       container('kaniko') {
         stage('Build React Project') {
           withEnv(["TAG=${TAG}"]){
-            sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:$TAG --force"
+            sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:$TAG --force --cache=true --cache-copy-layers"
           }
         }
       }
