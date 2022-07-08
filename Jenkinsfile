@@ -34,7 +34,7 @@ volumes:
             stage('Build React Project') {
                 steps{
                     script{
-                        sh script: 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
+                        sh 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
                     }
                     sh '''
                     /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
@@ -44,9 +44,11 @@ volumes:
         }
         }
         stage('Deploy to Kubernetes') {
-            sh script: "sed -i 's/TAG/${TAG}/'" deployment.yaml
-            kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
-                kubectl apply -f deployment.yaml
+            steps{
+                sh script: "sed -i 's/TAG/${TAG}/'" deployment.yaml
+                kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
+                    kubectl apply -f deployment.yaml
+                }
             }
         }
     }
