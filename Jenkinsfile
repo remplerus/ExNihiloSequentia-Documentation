@@ -30,18 +30,20 @@ volumes:
     }
     stages{
         stage('Build NGNIX Image') {
-        container('kaniko') {
-            stage('Build React Project') {
-                steps{
-                    script{
-                        sh 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
+            steps {
+                container('kaniko') {
+                    stage('Build React Project') {
+                        steps{
+                            script{
+                                sh 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
+                            }
+                            sh '''
+                            /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
+                            '''
+                        }
                     }
-                    sh '''
-                    /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
-                    '''
                 }
             }
-        }
         }
         stage('Deploy to Kubernetes') {
             steps{
