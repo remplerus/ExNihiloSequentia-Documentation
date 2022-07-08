@@ -1,8 +1,6 @@
 pipeline {
     agent {
         kubernetes {
-            cloud 'Kubernetes'
-            namespace 'default'
             defaultContainer 'kaniko'
             yaml '''
 apiVersion: v1
@@ -26,7 +24,7 @@ spec:
       items:
         - key: .dockerconfigjson
           path: config.json
-            '''
+'''
         }
     }
     environment {
