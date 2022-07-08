@@ -22,13 +22,12 @@ podTemplate(yaml: '''
               path: config.json
 ''') {
   node(POD_LABEL) {
-    environment {
-        K8S_CA = credentials('k8s-ca')
-    }
     stage('Build NGNIX Image') {
+      script {
+        env.TAG = sh script: "date +%Y.%m.%d-%H.%M.%S"
+      }
       container('kaniko') {
         stage('Build React Project') {
-          sh 'TAG=$(date +%Y.%m.%d-%H.%M.%S)'
           sh '''
             /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
           '''
@@ -37,7 +36,7 @@ podTemplate(yaml: '''
     }
     stage('Deploy to Kubernetes') {
         sh script: "sed -i 's/TAG/${TAG}/' deployment.yaml"
-        kubeconfig(caCertificate: '${K8S_CA}', credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
+        kubeconfig(caCertificate: credentials('k8s-ca'), credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
             sh script: "kubectl apply -f deployment.yaml"
         }
     }
