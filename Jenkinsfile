@@ -28,7 +28,7 @@ podTemplate(yaml: '''
     stage('Build NGNIX Image') {
       container('kaniko') {
         stage('Build React Project') {
-          sh 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
+          sh 'TAG=$(date +%Y.%m.%d-%H.%M.%S)'
           sh '''
             /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
           '''
