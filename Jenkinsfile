@@ -7,8 +7,8 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
-containers:
-- name: kaniko
+  containers:
+  - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
     command:
     - sleep
@@ -17,12 +17,12 @@ containers:
     volumeMounts:
     - name: kaniko-secret
     mountPath: /kaniko/.docker
-restartPolicy: Never
-volumes:
-- name: kaniko-secret
+  restartPolicy: Never
+  volumes:
+  - name: kaniko-secret
     secret:
-        secretName: dockercred
-        items:
+      secretName: dockercred
+      items:
         - key: .dockerconfigjson
         path: config.json
             '''
