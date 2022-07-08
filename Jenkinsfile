@@ -28,9 +28,7 @@ podTemplate(yaml: '''
       }
       container('kaniko') {
         stage('Build React Project') {
-          sh '''
-            /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
-          '''
+          sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force"
         }
       }
     }
