@@ -41,11 +41,9 @@ spec:
     }
     stage('Deploy to Kubernetes') {
         script {
-            env.TAG = sh(returnStdout: true,script: "date +%Y.%m.%d-%H.%M.%S").trim()
             env.K8S_CA = credentials('k8s-ca')
         }
         
-        sh script: "ls -al"
         sh script: "sed -i 's/TAG/${TAG}/' deployment.yaml"
         sh script: "cat deployment.yaml"
         
