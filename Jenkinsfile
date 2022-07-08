@@ -25,15 +25,18 @@ podTemplate(yaml: '''
     stage('Build NGNIX Image') {
       container('kaniko') {
         stage('Build React Project') {
-          env.TAG = sh returnStdout: true, script: 'date "+%Y.%m.%d-%H.%M.%s"'
+          env.TAG = sh returnStdout: true, script: 'date "+%Y.%m.%d-%H.%M.%S"'
           sh '''
-            /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:$(date "+%Y.%m.%d-%H.%M.%S") --force
+            /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
           '''
         }
       }
     }
     stage('Deploy to Kubernetes') {
-        sh 'echo DEPLOYING novamachina/mod-docs:${TAG}'
+        sh script: "sed -i 's/TAG/${TAG}'" deployment.yaml
+        kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
+            kubectl apply -f deployment.yaml
+        }
     }
   }
 }

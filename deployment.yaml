@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mod-docs-service
+  labels:
+    app: mod-docs
+spec:
+  selector:
+    app: mod-docs
+  ports:
+  - port: 80
+    targetPort: 80
+    name: mod-docs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mod-docs
+  labels:
+    app: mod-docs
+spec:
+  selector:
+    matchLabels:
+      app: mod-docs
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mod-docs
+    spec:
+      containers:
+      - name: mod-docs
+        image: novamachina/mod-docs:TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mod-docs
+  labels:
+    name: mod-docs
+spec:
+  tls:
+  - hosts:
+    - "*.jacob-williams.me"
+    secretName: wildcard-tls
+  rules:
+  - host: wiki.jacob-williams.me
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: mod-docs-service
+            port: 
+              number: 80
+
