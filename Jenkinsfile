@@ -12,6 +12,8 @@ spec:
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
+    - name: kaniko-cache
+      mountPath: /cache
   - name: jnlp
     image: novamachina/inbound-agent:2022.07.08-09.52.29
   restartPolicy: Never
@@ -22,6 +24,9 @@ spec:
         items:
         - key: .dockerconfigjson
           path: config.json
+  - name: Kaniko-cache
+    persistentVolumeClaim:
+      claimName: kaniko-cache
 ''') {
   node(POD_LABEL) {
     properties([
