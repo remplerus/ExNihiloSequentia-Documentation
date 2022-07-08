@@ -5,10 +5,9 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    command:
-    - sleep
-    args:
-    - 9999999
+    args: ["--cache",
+            "--cache-dir=/cache",
+            "--cache-copy-layers]
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
@@ -42,7 +41,7 @@ spec:
       container('kaniko') {
         stage('Build React Project') {
           withEnv(["TAG=${TAG}"]){
-            sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:$TAG --force --cache=true --cache-copy-layers --cache-dir=/cache"
+            sh script: "/kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:$TAG --force"
           }
         }
       }
