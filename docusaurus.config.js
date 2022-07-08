@@ -71,7 +71,7 @@ const config = {
           },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation/blob/master/',
+            href: 'https://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation/',
             label: 'GitHub',
             position: 'right',
           },
@@ -107,7 +107,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation/blob/master/',
+                href: 'https://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation/',
               },
             ],
           },
