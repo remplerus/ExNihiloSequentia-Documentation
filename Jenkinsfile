@@ -32,6 +32,9 @@ spec:
     }
     stages{
         stage('Build NGNIX Image') {
+            agent {
+                label "${POD_LABEL}"
+            }
             steps {
                 container('kaniko') {
                     steps{
