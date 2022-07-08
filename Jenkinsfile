@@ -24,7 +24,7 @@ spec:
       secretName: dockercred
       items:
         - key: .dockerconfigjson
-        path: config.json
+          path: config.json
             '''
         }
     }
