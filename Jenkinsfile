@@ -28,20 +28,26 @@ volumes:
             '''
         }
     }
-    stage('Build NGNIX Image') {
-      container('kaniko') {
-        stage('Build React Project') {
-          env.TAG = sh returnStdout: true, script: 'date "+%Y.%m.%d-%H.%M.%S"'
-          sh '''
-            /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
-          '''
+    stages{
+        stage('Build NGNIX Image') {
+        container('kaniko') {
+            stage('Build React Project') {
+                steps{
+                    script{
+                        echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"
+                    }
+                    sh '''
+                    /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
+                    '''
+                }
+            }
         }
-      }
-    }
-    stage('Deploy to Kubernetes') {
-        sh script: "sed -i 's/TAG/${TAG}/'" deployment.yaml
-        kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
-            kubectl apply -f deployment.yaml
+        }
+        stage('Deploy to Kubernetes') {
+            sh script: "sed -i 's/TAG/${TAG}/'" deployment.yaml
+            kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
+                kubectl apply -f deployment.yaml
+            }
         }
     }
 }
