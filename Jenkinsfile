@@ -34,7 +34,7 @@ volumes:
             stage('Build React Project') {
                 steps{
                     script{
-                        echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"
+                        sh script: 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
                     }
                     sh '''
                     /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
