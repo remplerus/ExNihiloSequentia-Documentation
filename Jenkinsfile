@@ -1,32 +1,36 @@
 podTemplate(yaml: '''
-    apiVersion: v1
-    kind: Pod
-    spec:
-      containers:
-      - name: kaniko
-        image: gcr.io/kaniko-project/executor:debug
-        command:
-        - sleep
-        args:
-        - 9999999
-        volumeMounts:
-        - name: kaniko-secret
-          mountPath: /kaniko/.docker
-      restartPolicy: Never
-      volumes:
-      - name: kaniko-secret
-        secret:
-            secretName: dockercred
-            items:
-            - key: .dockerconfigjson
-              path: config.json
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    command:
+    - sleep
+    args:
+    - 9999999
+    volumeMounts:
+    - name: kaniko-secret
+      mountPath: /kaniko/.docker
+  - name: jnlp
+    image: novamachina/inbound-agent:2022.07.08-09.52.29
+  restartPolicy: Never
+  volumes:
+  - name: kaniko-secret
+    secret:
+        secretName: dockercred
+        items:
+        - key: .dockerconfigjson
+          path: config.json
 ''') {
   node(POD_LABEL) {
+    stage('Clone') {
+        git credentialsId: '116d5159-9fe5-44ce-b7c4-d353c4837524', url: 'https://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation'
+    }
     stage('Build NGNIX Image') {
-      script {
-        env.TAG = sh script: "date +%Y.%m.%d-%H.%M.%S"
-        sh script: "printenv"
-      }
+        script {
+            env.TAG = sh(returnStdout: true,script: "date +%Y.%m.%d-%H.%M.%S").trim()
+        }
       container('kaniko') {
         stage('Build React Project') {
           withEnv(["TAG=${TAG}"]){
@@ -36,9 +40,17 @@ podTemplate(yaml: '''
       }
     }
     stage('Deploy to Kubernetes') {
+        script {
+            env.TAG = sh(returnStdout: true,script: "date +%Y.%m.%d-%H.%M.%S").trim()
+            env.K8S_CA = credentials('k8s-ca')
+        }
+        
+        sh script: "ls -al"
         sh script: "sed -i 's/TAG/${TAG}/' deployment.yaml"
-        kubeconfig(caCertificate: credentials('k8s-ca'), credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
-            sh script: "kubectl apply -f deployment.yaml"
+        sh script: "cat deployment.yaml"
+        
+        kubeconfig(caCertificate: env.K8S_CA, credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
+            sh script: "kubectl cluster-info"
         }
     }
   }
