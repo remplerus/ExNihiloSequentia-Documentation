@@ -32,24 +32,22 @@ volumes:
         stage('Build NGNIX Image') {
             steps {
                 container('kaniko') {
-                    stage('Build React Project') {
-                        steps{
-                            script{
-                                sh 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
-                            }
-                            sh '''
-                            /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
-                            '''
+                    steps{
+                        script{
+                            sh 'echo "TAG=$(date +%Y.%m.%d-%H.%M.%S)"'
                         }
+                        sh '''
+                        /kaniko/executor --context git://github.com/NovaMachina-Mods/ExNihiloSequentia-Documentation.git#refs/heads/master --destination novamachina/mod-docs:${TAG} --force
+                        '''
                     }
                 }
             }
         }
         stage('Deploy to Kubernetes') {
             steps{
-                sh script: "sed -i 's/TAG/${TAG}/'" deployment.yaml
+                sh script: "sed -i 's/TAG/${TAG}/g' deployment.yaml"
                 kubeconfig(credentialsId: 'Kube Config', serverUrl: 'http://jacob-williams.me:6443') {
-                    kubectl apply -f deployment.yaml
+                    sh script: "kubectl apply -f deployment.yaml"
                 }
             }
         }
