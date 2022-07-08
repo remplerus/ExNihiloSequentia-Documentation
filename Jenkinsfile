@@ -7,7 +7,7 @@ spec:
     image: gcr.io/kaniko-project/executor:debug
     args: ["--cache",
             "--cache-dir=/cache",
-            "--cache-copy-layers]
+            "--cache-copy-layers"]
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
