@@ -48,7 +48,7 @@ const sidebars = {
       collapsible: true,
       collapsed: true,
       items: [
-        'configuration/configuration', 'configuration/crafttweaker', 'configuration/data_pack'
+        'configuration/configuration', 'configuration/crafttweaker', 'configuration/data_pack', 'configuration/kubejs'
       ],
     },
     {
