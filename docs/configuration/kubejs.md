@@ -143,12 +143,13 @@ onEvent('recipes', event => {
 
 ## Sieve Recipes
 
-| Method                      | Parameters | Description                                            | Accepted Values                                              |
-| --------------------------- | ---------- | ------------------------------------------------------ | ------------------------------------------------------------ |
-| `sieve(input, output)`      | input      | Block to be sieved source                              | Block or Tag                                                 |
-|                             | output     | Item dropped from sieved block generated               | Item                                                         |
-| `addRoll(chance, meshType)` | chance     | Chance associated with this mesh type                  | A value between 0.0 and 1.0                                  |
-|                             | meshType   | Mesh required for item to be dropped at specified rate | `string`, `flint`, `iron`, `diamond`, `emerald`, `netherite` |
+| Method                      | Parameters | Description                                            | Accepted Values                                                          |
+| --------------------------- | ---------- | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `sieve(input, output)`      | input      | Block to be sieved source                              | Block or Tag                                                             |
+|                             | output     | Item dropped from sieved block generated               | Item                                                                     |
+| `addRoll(chance, meshType)` | chance     | Chance associated with this mesh type                  | A value between 0.0 and 1.0                                              |
+|                             | meshType   | Mesh required for item to be dropped at specified rate | `string`, `flint`, `iron`, `diamond`, `emerald`, `netherite`             |
+| `setWaterlogged()`           |            | Makes recipe require sieve to be waterlogged           | If present, recipe is waterlogged. If absent, recipe is not waterlogged. |
 
 `addRoll` can be chained multiple times to add more rolls that can trigger the drop.
 
