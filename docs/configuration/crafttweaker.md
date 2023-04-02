@@ -4,6 +4,8 @@ Ex Nihilo: Sequentia supports CraftTweaker scripts. Be sure to check the [CraftT
 
 All Ex Nihilo: Sequentia recipes follow a builder pattern, so ordering is not important as long as all the required methods are there.
 
+Information: Since 1.19.2 all imports have been renamed! (no "Zen" at the beginning anymore)
+
 ## Compost Recipes
 
 | Method                        | Description                                       | Accepted Values               | Required |
