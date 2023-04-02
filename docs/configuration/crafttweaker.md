@@ -15,7 +15,7 @@ All Ex Nihilo: Sequentia recipes follow a builder pattern, so ordering is not im
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenCompostRecipe;
+import mods.exnihilosequentia.CompostRecipe;
 
 <recipetype:exnihilosequentia:compost>
     .create("example")
@@ -34,7 +34,7 @@ import mods.exnihilosequentia.ZenCompostRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenCrookRecipe;
+import mods.exnihilosequentia.CrookRecipe;
 
 <recipetype:exnihilosequentia:crook>
     .create("example")
@@ -56,7 +56,7 @@ import mods.exnihilosequentia.ZenCrookRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenCrucibleRecipe;
+import mods.exnihilosequentia.CrucibleRecipe;
 
 <recipetype:exnihilosequentia:crucible>
     .create("example")
@@ -78,7 +78,7 @@ import mods.exnihilosequentia.ZenCrucibleRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenFluidItemRecipe;
+import mods.exnihilosequentia.FluidItemRecipe;
 
 <recipetype:exnihilosequentia:fluid_item>
     .create("example")
@@ -99,7 +99,7 @@ import mods.exnihilosequentia.ZenFluidItemRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenFluidOnTopRecipe;
+import mods.exnihilosequentia.FluidOnTopRecipe;
 
 <recipetype:exnihilosequentia:fluid_on_top>
     .create("example")
@@ -120,7 +120,7 @@ import mods.exnihilosequentia.ZenFluidOnTopRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenFluidTransformRecipe;
+import mods.exnihilosequentia.FluidTransformRecipe;
 
 <recipetype:exnihilosequentia:fluid_transform>
     .create("example")
@@ -141,7 +141,7 @@ import mods.exnihilosequentia.ZenFluidTransformRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenHammerRecipe;
+import mods.exnihilosequentia.HammerRecipe;
 
 <recipetype:exnihilosequentia:hammer>
     .create("example")
@@ -162,7 +162,7 @@ import mods.exnihilosequentia.ZenHammerRecipe;
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenHeatRecipe;
+import mods.exnihilosequentia.HeatRecipe;
 
 properties = StatePropertiesPredicate.withExactProperty("lit", true);
 
@@ -186,7 +186,7 @@ properties = StatePropertiesPredicate.withExactProperty("lit", true);
 #### Example
 
 ```js
-import mods.exnihilosequentia.ZenSieveRecipe;
+import mods.exnihilosequentia.SieveRecipe;
 
 <recipetype:exnihilosequentia:sieve>
     .create("example")
